@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO APP</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #main-heading{
+            text-align: center;
+        }
+
+        .grid-container{
+            display: grid;
+            grid-template-columns: 200px 150px 100px;
+            column-gap: 10px;
+            row-gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        #todo-input, #todo-date{
+            font-size: 15px;
+            padding: 10px 5px;
+        }
+
+        .btn-delete{
+            background-color: rgb(87,4,4);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 0px;
+        }
+
+        .btn-todo{
+            background-color: green ;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 0px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1 id="main-heading">Todo App</h1>
+
+    <div class="grid-container">
+
+    <input type="text" id="todo-input" placeholder="Enter Todo here" >
+    <input id="todo-date" type="date">
+    <button class="btn-todo"  onclick="addTodo();">Add</button>
+
+    </div>
+
+    <div class="todo-container grid-container"></div>
+
+    <script>
+
+        let todoList = [
+            {
+                item: 'Buy Milk',
+                dueDate: '4/1/2024'
+            },
+            {
+                item: 'Go to College', 
+                dueDate: '4/1/2024'
+            }
+        ];
+        displayItems();
+
+        function addTodo() {
+            let inputElement = document.querySelector('#todo-input');
+            let dateElement = document.querySelector('#todo-date'); 
+            let todoItem = inputElement.value;
+            let todoDate = dateElement.value;
+            todoList.push({item: todoItem, dueDate: todoDate});
+            inputElement.value = '';
+            dateElement.value = '';
+
+            displayItems();
+        }
+
+        function displayItems() {
+            let containerElement = document.querySelector('.todo-container');
+            let newHtml = '';
+            for(let i = 0; i < todoList.length; i++){
+                // let item = todoList[i].item;
+                // let dueDate = todoList[i].dueDate;
+                let {item, dueDate} = todoList[i];
+               
+                newHtml += `
+                <span>${item}</span>
+                <span>${dueDate}</span>
+                <button  class="btn-delete" onclick="todoList.splice(${i},1);displayItems();">Delete</button>
+                `;
+            }
+            containerElement.innerHTML = newHtml;
+        }
+
+
+
+    </script>
+    
+</body>
+</html>
